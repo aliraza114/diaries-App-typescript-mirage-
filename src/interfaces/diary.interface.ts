@@ -4,6 +4,7 @@ export interface Diary {
     type: 'private' | 'public'
     createdAt?: string
     deletedAt?: string
+    updatedAt?: string
     userId?: string
     entryIds: string[] | null 
 }

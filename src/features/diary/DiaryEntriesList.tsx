@@ -21,7 +21,7 @@ const DiaryEntriesList: FC = () => {
                 .then(({ entries: _entries }) => {
                     if (_entries) {
                         const sortByLastUpdated = _entries.sort((a, b) => {
-                            return dayjs(b.updatedAt).unix() - dayjs(a.updatedAt).unix();
+                            return dayjs(b.updateAt).unix() - dayjs(a.updateAt).unix();
                         });
                         dispatch(setEntries(sortByLastUpdated));
                     }

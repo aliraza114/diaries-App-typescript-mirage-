@@ -10,6 +10,7 @@ const App: FC = () => {
   const isLoggedIn = useSelector(
     (state: RootState) => state.auth.isAuthenticated
   );
+
   return (
     <Router>
       <Switch>

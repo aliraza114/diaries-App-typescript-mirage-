@@ -17,9 +17,7 @@ const schema = Yup.object().shape({
 });
 
 const Auth: FC = () => {
-    const { handleSubmit, register, errors } = useForm<User>({
-        validationSchema: schema,
-    });
+    const { handleSubmit, register, errors } = useForm<User>({validationSchema: schema});
     const [isLogin, setIsLogin] = useState(true);
     const [loading, setLoading] = useState(false);
     const dispatch = useAppDispatch();

@@ -29,5 +29,10 @@ const editor = createSlice({
     },
 });
 
-export const { setCanEdit, setCurrentlyEditing, setActiveDiaryId } = editor.actions;
+export const {
+    setCanEdit,
+    setCurrentlyEditing,
+    setActiveDiaryId,
+} = editor.actions;
+
 export default editor.reducer;

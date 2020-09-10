@@ -2,7 +2,7 @@ import { Server, Model, Factory, belongsTo, hasMany, Response } from 'miragejs'
 import user from './routes/user'
 import * as diary from './routes/diary'
 
-export const handlerErros = (error: any, message = 'An Error Occurs') => {
+export const handleErrors = (error: any, message = 'An Error Occurs') => {
     return new Response(400, undefined, {
         data: {
             message,
@@ -33,7 +33,7 @@ export const setupServer = (env?: string): Server => {
                 username: 'aliraza',
                 password: '12345678',
                 email: 'aliraza@gmail.com'
-            }) 
+            })
         },
         seeds: (server): any => {
             server.create('user')
@@ -42,16 +42,16 @@ export const setupServer = (env?: string): Server => {
         routes(): void {
             this.urlPrefix = 'https://diaries.app'
             this.get('/diaries/entries/:id', diary.getEntries);
-      this.get('/diaries/:id', diary.getDiaries);
+            this.get('/diaries/:id', diary.getDiaries);
 
-      this.post('/auth/login', user.signIn);
-      this.post('/auth/signup', user.signUp);
+            this.post('/auth/login', user.login);
+            this.post('/auth/signup', user.signup);
 
-      this.post('/diaries/', diary.create);
-      this.post('/diaries/entry/:id', diary.addEntry);
+            this.post('/diaries/', diary.create);
+            this.post('/diaries/entry/:id', diary.addEntry);
 
-      this.put('/diaries/entry/:id', diary.updateEntry);
-      this.put('/diaries/:id', diary.updateDiary);
+            this.put('/diaries/entry/:id', diary.updateEntry);
+            this.put('/diaries/:id', diary.updateDiary);
         }
     })
 }

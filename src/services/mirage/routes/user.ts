@@ -1,47 +1,46 @@
 import { Response, Request } from 'miragejs';
-import { handlerErros } from './../server';
-
-import { User } from './../../../interfaces/user.interface';
+import { handleErrors } from '../server';
+import { User } from '../../../interfaces/user.interface';
 import { randomBytes } from 'crypto';
 
-
-const generateToken = () => randomBytes(8).toString('hex')
+const generateToken = () => randomBytes(8).toString('hex');
 
 export interface AuthResponse {
-    token: string
-    user: User
+    token: string;
+    user: User;
 }
 
-const signIn = (schema: any, req: Request): AuthResponse | Response => {
-    const { username, password } = JSON.stringify(req.requestBody)
-    const user = schema.users.findBy({ username })
-
-    if(!user){
-        return handlerErros(null, 'User not found!')
+const login = (schema: any, req: Request): AuthResponse | Response => {
+    const { username, password } = JSON.parse(req.requestBody);
+    const user = schema.users.findBy({ username });
+    if (!user) {
+        return handleErrors(null, 'No user with that username exists');
     }
-    if( password !== user.password){
-        return handlerErros(null, 'Passowrd is incorrect')
+    if (password !== user.password) {
+        return handleErrors(null, 'Password is incorrect');
     }
-    const token = generateToken()
+    const token = generateToken();
     return {
         user: user.attrs as User,
-        token
-    }
-}
+        token,
+    };
+};
 
-const signUp = (schema: any, req: Request): AuthResponse | Response => {
-    const data = JSON.parse(req.requestBody)
-    const regUser = schema.users.findBy({ username: data.username })
-    if(regUser){
-        return handlerErros(null, 'Users already exixt')
+const signup = (schema: any, req: Request): AuthResponse | Response => {
+    const data = JSON.parse(req.requestBody);
+    const exUser = schema.users.findBy({ username: data.username });
+    if (exUser) {
+        return handleErrors(null, 'A user with that username already exists.');
     }
-    const newUser = schema.users.create(data)
-    const token = generateToken()
+    const user = schema.users.create(data);
+    const token = generateToken();
     return {
-        user: newUser.attrs as User,
-        token
-    }
-}
+        user: user.attrs as User,
+        token,
+    };
+};
 
-export default { signIn, signUp }
-
+export default {
+    login,
+    signup,
+};
